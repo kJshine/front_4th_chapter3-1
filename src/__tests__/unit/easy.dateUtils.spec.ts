@@ -1,4 +1,7 @@
-import { Event } from '../../types';
+import { useCalendarView } from '../../hooks/useCalendarView';
+import { useEventOperations } from '../../hooks/useEventOperations';
+import { useSearch } from '../../hooks/useSearch';
+import { Event, RepeatType } from '../../types';
 import {
   fillZero,
   formatDate,
@@ -205,13 +208,109 @@ describe('getWeeksAtMonth', () => {
 });
 
 describe('getEventsForDay', () => {
-  it('특정 날짜(1일)에 해당하는 이벤트만 정확히 반환한다', () => {});
+  const singleEvents: Event[] = [
+    {
+      id: '2b7545a6-ebee-426c-b906-2329bc8d62bd',
+      title: '팀 회의1',
+      date: '2025-02-01',
+      startTime: '10:00',
+      endTime: '11:00',
+      description: '주간 팀 미팅',
+      location: '회의실 A',
+      category: '업무',
+      repeat: {
+        type: 'none' as RepeatType,
+        interval: 0,
+      },
+      notificationTime: 1,
+    },
+  ];
 
-  it('해당 날짜에 이벤트가 없을 경우 빈 배열을 반환한다', () => {});
+  const multipleEvents: Event[] = [
+    ...singleEvents,
+    {
+      id: '2b7545a6-ebee-426c-b906-2329bc8d62bf',
+      title: '팀 회의2',
+      date: '2025-02-01',
+      startTime: '14:00',
+      endTime: '15:00',
+      description: '주간 팀 미팅',
+      location: '회의실 A',
+      category: '업무',
+      repeat: {
+        type: 'none' as RepeatType,
+        interval: 0,
+      },
+      notificationTime: 1,
+    },
+  ];
 
-  it('날짜가 0일 경우 빈 배열을 반환한다', () => {});
+  const mixedEvents: Event[] = [
+    ...multipleEvents,
+    {
+      id: '2b7545a6-ebee-426c-b906-2329bc8d62be',
+      title: '운동',
+      date: '2025-02-02',
+      startTime: '14:00',
+      endTime: '15:00',
+      description: '운동하자',
+      location: '헬스장',
+      category: '개인',
+      repeat: {
+        type: 'none' as RepeatType,
+        interval: 0,
+      },
+      notificationTime: 1,
+    },
+  ];
 
-  it('날짜가 32일 이상인 경우 빈 배열을 반환한다', () => {});
+  it('특정 날짜(1일)에 해당하는 이벤트만 정확히 반환한다', () => {
+    expect(getEventsForDay(singleEvents, 1)).toEqual(singleEvents);
+  });
+
+  it('특정 날짜(1일)에 해당하는 이벤트를 모두 반환한다', () => {
+    expect(getEventsForDay(multipleEvents, 1)).toEqual(multipleEvents);
+  });
+
+  it('여러 이벤트가 있어도 특정 날짜(2일)에 해당하는 이벤트만 반환한다', () => {
+    expect(getEventsForDay(mixedEvents, 2)).toEqual([
+      {
+        id: '2b7545a6-ebee-426c-b906-2329bc8d62be',
+        title: '운동',
+        date: '2025-02-02',
+        startTime: '14:00',
+        endTime: '15:00',
+        description: '운동하자',
+        location: '헬스장',
+        category: '개인',
+        repeat: {
+          type: 'none' as RepeatType,
+          interval: 0,
+        },
+        notificationTime: 1,
+      },
+    ]);
+  });
+
+  it('해당 날짜에 이벤트가 없을 경우 빈 배열을 반환한다', () => {
+    expect(getEventsForDay(singleEvents, 3)).toEqual([]);
+  });
+
+  it('이벤트가 없을 경우 빈 배열을 반환한다', () => {
+    expect(getEventsForDay([], 1)).toEqual([]);
+  });
+
+  it('날짜가 -1일 경우 빈 배열을 반환한다', () => {
+    expect(getEventsForDay(singleEvents, -1)).toEqual([]);
+  });
+
+  it('날짜가 0일 경우 빈 배열을 반환한다', () => {
+    expect(getEventsForDay(singleEvents, 0)).toEqual([]);
+  });
+
+  it('날짜가 32일 이상인 경우 빈 배열을 반환한다', () => {
+    expect(getEventsForDay(singleEvents, 32)).toEqual([]);
+  });
 });
 
 describe('formatWeek', () => {

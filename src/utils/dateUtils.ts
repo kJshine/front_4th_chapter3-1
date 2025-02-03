@@ -63,6 +63,12 @@ export function getWeeksAtMonth(currentDate: Date) {
   return weeks;
 }
 
+/**
+ * 특정 날짜(일)에 해당하는 이벤트를 반환합니다.
+ * @param events 필터링된 이벤트 배열
+ * @param date 기준이 되는 날짜
+ * @returns 해당 날짜에 대한 이벤트 배열
+ */
 export function getEventsForDay(events: Event[], date: number): Event[] {
   return events.filter((event) => new Date(event.date).getDate() === date);
 }

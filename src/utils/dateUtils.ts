@@ -73,6 +73,11 @@ export function getEventsForDay(events: Event[], date: number): Event[] {
   return events.filter((event) => new Date(event.date).getDate() === date);
 }
 
+/**
+ * 특정 날짜에 대한 주 정보를 반환한다.
+ * @param targetDate 기준이 되는 날짜
+ * @returns 주의 문자열 ex) 2025년 2월 2주
+ */
 export function formatWeek(targetDate: Date) {
   const dayOfWeek = targetDate.getDay();
   const diffToThursday = 4 - dayOfWeek;

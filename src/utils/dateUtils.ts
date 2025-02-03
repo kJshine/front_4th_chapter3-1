@@ -12,6 +12,8 @@ export function getDaysInMonth(year: number, month: number): number {
 
 /**
  * 주어진 날짜가 속한 주의 모든 날짜를 반환합니다.
+ * @params date - 기준 날짜
+ * @returns 일요일 ~ 토요일까지의 date 배열
  */
 export function getWeekDates(date: Date): Date[] {
   const day = date.getDay();

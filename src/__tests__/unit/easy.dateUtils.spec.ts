@@ -150,7 +150,58 @@ describe('getWeekDates', () => {
 });
 
 describe('getWeeksAtMonth', () => {
-  it('2024년 7월 1일의 올바른 주 정보를 반환해야 한다', () => {});
+  it('2024년 7월 1일의 올바른 주 정보를 반환해야 한다', () => {
+    const result = getWeeksAtMonth(new Date('2024-07-01'));
+    const expectedWeeks = [
+      [null, 1, 2, 3, 4, 5, 6],
+      [7, 8, 9, 10, 11, 12, 13],
+      [14, 15, 16, 17, 18, 19, 20],
+      [21, 22, 23, 24, 25, 26, 27],
+      [28, 29, 30, 31, null, null, null],
+    ];
+
+    expect(result).toEqual(expectedWeeks);
+  });
+
+  it('2024년 3월(6주가 되는 달)의 올바른 주 정보를 반환해야 한다', () => {
+    const result = getWeeksAtMonth(new Date('2024-03-01'));
+    const expectedWeeks = [
+      [null, null, null, null, null, 1, 2],
+      [3, 4, 5, 6, 7, 8, 9],
+      [10, 11, 12, 13, 14, 15, 16],
+      [17, 18, 19, 20, 21, 22, 23],
+      [24, 25, 26, 27, 28, 29, 30],
+      [31, null, null, null, null, null, null],
+    ];
+
+    expect(result).toEqual(expectedWeeks);
+  });
+
+  it('윤년 2024년 2월의 올바른 주 정보를 반환해야 한다', () => {
+    const result = getWeeksAtMonth(new Date('2024-02-01'));
+    const expectedWeeks = [
+      [null, null, null, null, 1, 2, 3],
+      [4, 5, 6, 7, 8, 9, 10],
+      [11, 12, 13, 14, 15, 16, 17],
+      [18, 19, 20, 21, 22, 23, 24],
+      [25, 26, 27, 28, 29, null, null],
+    ];
+
+    expect(result).toEqual(expectedWeeks);
+  });
+
+  it('평년 2025년 2월의 올바른 주 정보를 반환해야 한다', () => {
+    const result = getWeeksAtMonth(new Date('2025-02-01'));
+    const expectedWeeks = [
+      [null, null, null, null, null, null, 1],
+      [2, 3, 4, 5, 6, 7, 8],
+      [9, 10, 11, 12, 13, 14, 15],
+      [16, 17, 18, 19, 20, 21, 22],
+      [23, 24, 25, 26, 27, 28, null],
+    ];
+
+    expect(result).toEqual(expectedWeeks);
+  });
 });
 
 describe('getEventsForDay', () => {

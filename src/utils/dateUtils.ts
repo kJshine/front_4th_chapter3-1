@@ -28,6 +28,13 @@ export function getWeekDates(date: Date): Date[] {
   return weekDates;
 }
 
+/**
+ * 주어진 날짜가 속한 월의 모든 주를 반환합니다.
+ * @param currentDate 기준 날짜
+ * @returns 해당 월의 주 단위 날짜 배열(2차원).
+ * 해당 월에 속하지 않는 날은 null로 표시
+ */
+
 export function getWeeksAtMonth(currentDate: Date) {
   const year = currentDate.getFullYear();
   const month = currentDate.getMonth();

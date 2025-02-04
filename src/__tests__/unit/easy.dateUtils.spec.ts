@@ -377,45 +377,102 @@ describe('isDateInRange', () => {
   const rangeStart = new Date('2024-07-01');
   const rangeEnd = new Date('2024-07-31');
 
-  it('범위 내의 날짜 2024-07-10에 대해 true를 반환한다', () => {});
+  it('범위 내의 날짜 2024-07-10에 대해 true를 반환한다', () => {
+    expect(isDateInRange(new Date('2024-07-10'), rangeStart, rangeEnd)).toBe(true);
+  });
 
-  it('범위의 시작일 2024-07-01에 대해 true를 반환한다', () => {});
+  it('범위의 시작일 2024-07-01에 대해 true를 반환한다', () => {
+    expect(isDateInRange(new Date('2024-07-01'), rangeStart, rangeEnd)).toBe(true);
+  });
 
-  it('범위의 종료일 2024-07-31에 대해 true를 반환한다', () => {});
+  it('범위의 종료일 2024-07-31에 대해 true를 반환한다', () => {
+    expect(isDateInRange(new Date('2024-07-31'), rangeStart, rangeEnd)).toBe(true);
+  });
 
-  it('범위 이전의 날짜 2024-06-30에 대해 false를 반환한다', () => {});
+  it('범위 이전의 날짜 2024-06-30에 대해 false를 반환한다', () => {
+    expect(isDateInRange(new Date('2024-06-30'), rangeStart, rangeEnd)).toBe(false);
+  });
 
-  it('범위 이후의 날짜 2024-08-01에 대해 false를 반환한다', () => {});
+  it('범위 이후의 날짜 2024-08-01에 대해 false를 반환한다', () => {
+    expect(isDateInRange(new Date('2024-08-01'), rangeStart, rangeEnd)).toBe(false);
+  });
 
-  it('시작일이 종료일보다 늦은 경우 모든 날짜에 대해 false를 반환한다', () => {});
+  it('시작일이 종료일보다 늦은 경우 모든 날짜에 대해 false를 반환한다', () => {
+    expect(isDateInRange(rangeStart, rangeEnd, rangeStart)).toBe(false);
+    expect(isDateInRange(rangeEnd, rangeEnd, rangeStart)).toBe(false);
+  });
+
+  it('시작일과 종료일이 같은 경우에도 정상 동작한다', () => {
+    expect(isDateInRange(rangeStart, rangeStart, rangeStart)).toBe(true);
+    expect(isDateInRange(rangeEnd, rangeStart, rangeStart)).toBe(false);
+  });
 });
 
 describe('fillZero', () => {
-  test("5를 2자리로 변환하면 '05'를 반환한다", () => {});
+  test("5를 2자리로 변환하면 '05'를 반환한다", () => {
+    expect(fillZero(5, 2)).toBe('05');
+  });
 
-  test("10을 2자리로 변환하면 '10'을 반환한다", () => {});
+  test("10을 2자리로 변환하면 '10'을 반환한다", () => {
+    expect(fillZero(10, 2)).toBe('10');
+  });
 
-  test("3을 3자리로 변환하면 '003'을 반환한다", () => {});
+  test("3을 3자리로 변환하면 '003'을 반환한다", () => {
+    expect(fillZero(3, 3)).toBe('003');
+  });
 
-  test("100을 2자리로 변환하면 '100'을 반환한다", () => {});
+  test("100을 2자리로 변환하면 '100'을 반환한다", () => {
+    expect(fillZero(100, 2)).toBe('100');
+  });
 
-  test("0을 2자리로 변환하면 '00'을 반환한다", () => {});
+  test("0을 2자리로 변환하면 '00'을 반환한다", () => {
+    expect(fillZero(0, 2)).toBe('00');
+  });
 
-  test("1을 5자리로 변환하면 '00001'을 반환한다", () => {});
+  test("1을 5자리로 변환하면 '00001'을 반환한다", () => {
+    expect(fillZero(1, 5)).toBe('00001');
+  });
 
-  test("소수점이 있는 3.14를 5자리로 변환하면 '03.14'를 반환한다", () => {});
+  test("소수점이 있는 3.14를 5자리로 변환하면 '03.14'를 반환한다", () => {
+    expect(fillZero(3.14, 5)).toBe('03.14');
+  });
 
-  test('size 파라미터를 생략하면 기본값 2를 사용한다', () => {});
+  test('size 파라미터를 생략하면 기본값 2를 사용한다', () => {
+    expect(fillZero(1)).toBe('01');
+  });
 
-  test('value가 지정된 size보다 큰 자릿수를 가지면 원래 값을 그대로 반환한다', () => {});
+  test('value가 지정된 size보다 큰 자릿수를 가지면 원래 값을 그대로 반환한다', () => {
+    expect(fillZero(10000, 2)).toBe('10000');
+  });
+
+  test('size 파라미터가 0이하인 경우에는 원래 값을 그대로 반환한다', () => {
+    expect(fillZero(50, 0)).toBe('50');
+    expect(fillZero(5000, -1)).toBe('5000');
+  });
+
+  test('기호를 포함한 음수 값이 size 파라미터보다 크면 정상 동작한다', () => {
+    expect(fillZero(-1, 2)).toBe('-1');
+  });
+
+  test('기호를 포함한 음수 값이 size 파라미터보다 작으면 정상 동작하지 않는다', () => {
+    expect(fillZero(-1, 3)).toBe('0-1');
+  });
 });
 
 describe('formatDate', () => {
-  it('날짜를 YYYY-MM-DD 형식으로 포맷팅한다', () => {});
+  it('날짜를 YYYY-MM-DD 형식으로 포맷팅한다', () => {
+    expect(formatDate(new Date('2025-10-10'))).toBe('2025-10-10');
+  });
 
-  it('day 파라미터가 제공되면 해당 일자로 포맷팅한다', () => {});
+  it('day 파라미터가 제공되면 해당 일자로 포맷팅한다', () => {
+    expect(formatDate(new Date('2025-10-20'))).toBe('2025-10-20');
+  });
 
-  it('월이 한 자리 수일 때 앞에 0을 붙여 포맷팅한다', () => {});
+  it('월이 한 자리 수일 때 앞에 0을 붙여 포맷팅한다', () => {
+    expect(formatDate(new Date('2025-02-10'))).toBe('2025-02-10');
+  });
 
-  it('일이 한 자리 수일 때 앞에 0을 붙여 포맷팅한다', () => {});
+  it('일이 한 자리 수일 때 앞에 0을 붙여 포맷팅한다', () => {
+    expect(formatDate(new Date('2025-10-04'))).toBe('2025-10-04');
+  });
 });

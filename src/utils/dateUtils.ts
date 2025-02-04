@@ -111,15 +111,31 @@ export function formatMonth(date: Date): string {
 
 /**
  * 주어진 날짜가 특정 범위 내에 있는지 확인합니다.
+ * @param date 검사할 날짜
+ * @param rangeStart 범위의 시작 날짜 (포함)
+ * @param rangeEnd 범위의 종료 날짜 (포함)
+ * @returns 범위 내에 있다면 true, 아니면 false
  */
 export function isDateInRange(date: Date, rangeStart: Date, rangeEnd: Date): boolean {
   return date >= rangeStart && date <= rangeEnd;
 }
 
+/**
+ * 숫자를 지정한 자릿수(size)의 문자열로 반환합니다. 부족한 자릿수는 앞에 0을 추가합니다.
+ * @param value 변환할 숫자
+ * @param size 원하는 자릿수
+ * @returns 지정한 자릿수의 문자열
+ */
 export function fillZero(value: number, size = 2) {
   return String(value).padStart(size, '0');
 }
 
+/**
+ * Date 객체를 포맷팅된 문자열로 반환합니다.
+ * @param currentDate 변환할 날짜
+ * @param day 선택적으로 지정할 일자
+ * @returns "YYYY-MM-DD" 형식의 문자열
+ */
 export function formatDate(currentDate: Date, day?: number) {
   return [
     currentDate.getFullYear(),

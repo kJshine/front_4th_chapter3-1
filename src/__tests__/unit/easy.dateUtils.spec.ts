@@ -1,6 +1,3 @@
-import { useCalendarView } from '../../hooks/useCalendarView';
-import { useEventOperations } from '../../hooks/useEventOperations';
-import { useSearch } from '../../hooks/useSearch';
 import { Event, RepeatType } from '../../types';
 import {
   fillZero,
@@ -366,7 +363,14 @@ describe('formatWeek', () => {
 });
 
 describe('formatMonth', () => {
-  it("2024년 7월 10일을 '2024년 7월'로 반환한다", () => {});
+  it("2024년 7월 10일을 '2024년 7월'로 반환한다", () => {
+    expect(formatMonth(new Date('2024-07-10'))).toBe('2024년 7월');
+  });
+
+  it('연도가 바뀌는 달을 올바르게 반환한다', () => {
+    expect(formatMonth(new Date('2024-12-31'))).toBe('2024년 12월');
+    expect(formatMonth(new Date('2025-01-01'))).toBe('2025년 1월');
+  });
 });
 
 describe('isDateInRange', () => {

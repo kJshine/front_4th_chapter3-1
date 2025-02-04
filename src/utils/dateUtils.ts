@@ -76,7 +76,7 @@ export function getEventsForDay(events: Event[], date: number): Event[] {
 /**
  * 특정 날짜에 대한 주 정보를 반환한다.
  * @param targetDate 기준이 되는 날짜
- * @returns 주의 문자열 ex) 2025년 2월 2주
+ * @returns "YYYY년 M월 W주" 형식의 문자열
  */
 export function formatWeek(targetDate: Date) {
   const dayOfWeek = targetDate.getDay();
@@ -99,7 +99,9 @@ export function formatWeek(targetDate: Date) {
 }
 
 /**
- * 주어진 날짜의 월 정보를 "YYYY년 M월" 형식으로 반환합니다.
+ * 주어진 날짜의 월 정보를 반환합니다.
+ * @param data 기준이 되는 날짜
+ * @returns "YYYY년 M월" 형식의 문자열
  */
 export function formatMonth(date: Date): string {
   const year = date.getFullYear();

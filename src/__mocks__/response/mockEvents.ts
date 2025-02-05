@@ -65,3 +65,42 @@ export const FILTERED_EVENTS: Event[] = [
     notificationTime: 10,
   },
 ];
+
+export const SEARCH_EVENTS: Event[] = [
+  {
+    id: '1',
+    title: '회의',
+    date: '2025-02-05',
+    startTime: '09:00',
+    endTime: '10:00',
+    description: '기존 팀 미팅1',
+    location: '회의실 A',
+    category: '업무',
+    repeat: { type: 'none', interval: 0 },
+    notificationTime: 10,
+  },
+  {
+    id: '2',
+    title: '팀 회의 1',
+    date: '2025-02-05',
+    startTime: '10:00',
+    endTime: '11:00',
+    description: '기존 팀 미팅2',
+    location: '회의실 B',
+    category: '업무',
+    repeat: { type: 'none', interval: 0 },
+    notificationTime: 10,
+  },
+  {
+    id: '3',
+    title: '팀 회의 2',
+    date: '2025-02-05',
+    startTime: '11:00',
+    endTime: '12:00',
+    description: '기존 팀 미팅3',
+    location: '회의실 C',
+    category: '업무',
+    repeat: { type: 'none', interval: 0 },
+    notificationTime: 10,
+  },
+];

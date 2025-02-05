@@ -95,3 +95,13 @@ export const mockEventFactory = (overrides: Partial<Event> = {}): Event => ({
   notificationTime: 10,
   ...overrides,
 });
+
+export async function performSearch(user: UserEvent, searchTerm: string) {
+  const searchInput = screen.getByLabelText(/일정 검색/);
+  if (searchTerm === '') {
+    await user.clear(searchInput);
+  } else {
+    await user.type(searchInput, searchTerm);
+  }
+  return screen.getByTestId('event-list');
+}

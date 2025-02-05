@@ -1,21 +1,91 @@
 import { ChakraProvider } from '@chakra-ui/react';
-import { render, screen, within, act } from '@testing-library/react';
+import { render, screen, within, act, getByRole, waitFor } from '@testing-library/react';
 import { UserEvent, userEvent } from '@testing-library/user-event';
 import { http, HttpResponse } from 'msw';
 import { ReactElement } from 'react';
 
+import { setupMockHandlers } from '../__mocks__/handlersUtils';
+import { MOCK_EVENTS } from '../__mocks__/response/mockEvents';
 import App from '../App';
 import { server } from '../setupTests';
 import { Event } from '../types';
+import { fillEventForm, mockEventFactory, verifyEventInList } from './utils';
+
+let user: UserEvent;
+
+const renderApp = () => {
+  return render(
+    <ChakraProvider>
+      <App />
+    </ChakraProvider>
+  );
+};
+
+beforeEach(() => {
+  user = userEvent.setup();
+});
+
+afterEach(() => {
+  vi.useRealTimers();
+});
 
 describe('일정 CRUD 및 기본 기능', () => {
   it('입력한 새로운 일정 정보에 맞춰 모든 필드가 이벤트 리스트에 정확히 저장된다.', async () => {
     // ! HINT. event를 추가 제거하고 저장하는 로직을 잘 살펴보고, 만약 그대로 구현한다면 어떤 문제가 있을 지 고민해보세요.
+
+    setupMockHandlers();
+    renderApp();
+
+    const newEvent = mockEventFactory({
+      title: '이벤트 1',
+      description: '기존 팀 미팅1',
+      location: '회의실 A',
+    });
+
+    await fillEventForm(user, newEvent);
+    await user.click(screen.getByRole('button', { name: '일정 추가' }));
+    await verifyEventInList(newEvent);
   });
 
-  it('기존 일정의 세부 정보를 수정하고 변경사항이 정확히 반영된다', async () => {});
+  it('기존 일정의 세부 정보를 수정하고 변경사항이 정확히 반영된다', async () => {
+    const mockEvent = mockEventFactory();
 
-  it('일정을 삭제하고 더 이상 조회되지 않는지 확인한다', async () => {});
+    setupMockHandlers([mockEvent]);
+    renderApp();
+
+    const eventList = screen.getByTestId('event-list');
+    const editButton = await within(eventList).findByRole('button', { name: 'Edit event' });
+    await user.click(editButton);
+
+    const editEvent = mockEventFactory({
+      title: '변경된 회의',
+      startTime: '15:00',
+      endTime: '16:00',
+      description: '변경된 팀 미팅',
+      location: '회의실 A',
+    });
+
+    await fillEventForm(user, editEvent);
+    await user.click(screen.getByRole('button', { name: '일정 수정' }));
+    await verifyEventInList(editEvent);
+  });
+
+  it('일정을 삭제하고 더 이상 조회되지 않는지 확인한다', async () => {
+    const mockEvent = mockEventFactory();
+    setupMockHandlers([mockEvent]);
+    renderApp();
+
+    const eventList = screen.getByTestId('event-list');
+    await waitFor(() => {
+      expect(within(eventList).getByText(mockEvent.title)).toBeInTheDocument();
+    });
+    const deleteButton = await within(eventList).findByRole('button', { name: 'Delete event' });
+    await user.click(deleteButton);
+
+    await waitFor(() => {
+      expect(within(eventList).queryByText(mockEvent.title)).not.toBeInTheDocument();
+    });
+  });
 });
 
 describe('일정 뷰', () => {

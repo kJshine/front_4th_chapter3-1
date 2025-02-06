@@ -215,7 +215,8 @@ describe('일정 충돌', () => {
 
   it('기존 일정의 시간을 수정하여 충돌이 발생하면 경고가 노출된다', async () => {
     const resultEventList = await performSearch(user, '팀 회의 1');
-    const editButton = within(resultEventList).getByRole('button', {
+    const eventItem = within(resultEventList).getByText('팀 회의 1').closest('.css-19iv9lz');
+    const editButton = within(eventItem as HTMLElement).getByRole('button', {
       name: 'Edit event',
     });
     await user.click(editButton);

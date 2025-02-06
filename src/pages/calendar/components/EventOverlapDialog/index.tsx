@@ -8,51 +8,23 @@ import {
   Button,
   Text,
 } from '@chakra-ui/react';
-import { RefObject } from 'react';
+import { useRef } from 'react';
 
-import { RepeatType, Event, EventForm } from '@/types';
+import { useEventStore } from '../../stores';
+import { useOverlapDialogStore } from '../../stores/useOverlapDialogStore';
 
+import { Event, EventForm } from '@/types';
 interface EventOverlapDialogProps {
-  isOverlapDialogOpen: boolean;
-  setIsOverlapDialogOpen: (isOpen: boolean) => void;
-  overlappingEvents: Event[];
-  cancelRef: RefObject<HTMLButtonElement>;
   saveEvent: (event: Event | EventForm) => void;
-  editingEvent: Event | null;
-  title: string;
-  date: string;
-  startTime: string;
-  endTime: string;
-  description: string;
-  location: string;
-  category: string;
-  repeatType: RepeatType;
-  repeatInterval: number;
-  repeatEndDate: string;
-  notificationTime: number;
-  isRepeating: boolean;
 }
 
-export const EventOverlapDialog = ({
-  isOverlapDialogOpen,
-  setIsOverlapDialogOpen,
-  overlappingEvents,
-  cancelRef,
-  saveEvent,
-  editingEvent,
-  title,
-  date,
-  startTime,
-  endTime,
-  description,
-  location,
-  category,
-  repeatType,
-  repeatInterval,
-  repeatEndDate,
-  notificationTime,
-  isRepeating,
-}: EventOverlapDialogProps) => {
+export const EventOverlapDialog = ({ saveEvent }: EventOverlapDialogProps) => {
+  const eventStore = useEventStore();
+  const cancelRef = useRef<HTMLButtonElement>(null);
+
+  const { isOverlapDialogOpen, setIsOverlapDialogOpen, overlappingEvents } =
+    useOverlapDialogStore();
+
   return (
     <AlertDialog
       isOpen={isOverlapDialogOpen}
@@ -84,20 +56,20 @@ export const EventOverlapDialog = ({
               onClick={() => {
                 setIsOverlapDialogOpen(false);
                 saveEvent({
-                  id: editingEvent ? editingEvent.id : undefined,
-                  title,
-                  date,
-                  startTime,
-                  endTime,
-                  description,
-                  location,
-                  category,
+                  id: eventStore.editingEvent ? eventStore.editingEvent.id : undefined,
+                  title: eventStore.title,
+                  date: eventStore.date,
+                  startTime: eventStore.startTime,
+                  endTime: eventStore.endTime,
+                  description: eventStore.description,
+                  location: eventStore.location,
+                  category: eventStore.category,
                   repeat: {
-                    type: isRepeating ? repeatType : 'none',
-                    interval: repeatInterval,
-                    endDate: repeatEndDate || undefined,
+                    type: eventStore.isRepeating ? eventStore.repeatType : 'none',
+                    interval: eventStore.repeatInterval,
+                    endDate: eventStore.repeatEndDate || undefined,
                   },
-                  notificationTime,
+                  notificationTime: eventStore.notificationTime,
                 });
               }}
               ml={3}

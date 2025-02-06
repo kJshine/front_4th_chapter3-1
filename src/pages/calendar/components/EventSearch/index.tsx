@@ -11,8 +11,8 @@ import {
 } from '@chakra-ui/react';
 
 import { NOTIFICATION_OPTIONS } from '../../constants';
-import { useEventStore } from '../../stores';
 
+import { useEventForm } from '@/hooks/useEventForm';
 import { Event } from '@/types';
 
 interface EventSearchProps {
@@ -29,7 +29,7 @@ export const EventSearch = ({
   deleteEvent,
   notifiedEvents,
 }: EventSearchProps) => {
-  const eventStore = useEventStore();
+  const { editEvent } = useEventForm();
 
   return (
     <VStack data-testid="event-list" w="500px" h="full" overflowY="auto">
@@ -88,7 +88,7 @@ export const EventSearch = ({
                 <IconButton
                   aria-label="Edit event"
                   icon={<EditIcon />}
-                  onClick={() => eventStore.setEditingEvent(event)}
+                  onClick={() => editEvent(event)}
                 />
                 <IconButton
                   aria-label="Delete event"

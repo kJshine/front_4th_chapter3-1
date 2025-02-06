@@ -17,6 +17,7 @@ import {
 
 import { WEEK_DAYS } from '../../constants';
 
+import { useCalendarView } from '@/hooks/useCalendarView';
 import { Event } from '@/types';
 import {
   formatDate,
@@ -28,24 +29,13 @@ import {
 } from '@/utils/dateUtils';
 
 interface EventViewProps {
-  view: 'week' | 'month';
-  setView: (view: 'week' | 'month') => void;
-  currentDate: Date;
-  holidays: Record<string, string>;
   filteredEvents: Event[];
   notifiedEvents: string[];
-  navigate: (direction: 'prev' | 'next') => void;
 }
 
-export const EventView = ({
-  view,
-  setView,
-  currentDate,
-  holidays,
-  filteredEvents,
-  notifiedEvents,
-  navigate,
-}: EventViewProps) => {
+export const EventView = ({ filteredEvents, notifiedEvents }: EventViewProps) => {
+  const { view, setView, currentDate, holidays, navigate } = useCalendarView();
+
   const renderWeekView = () => {
     const weekDates = getWeekDates(currentDate);
     return (

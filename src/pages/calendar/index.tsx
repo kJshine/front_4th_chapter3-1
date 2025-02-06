@@ -1,6 +1,6 @@
 import { Box, Flex } from '@chakra-ui/react';
 
-import { EventFormComponent } from './components/EventForm';
+import { AddEventForm } from './components/AddEventForm';
 import { EventOverlapDialog } from './components/EventOverlapDialog';
 import { EventSearch } from './components/EventSearch';
 import { EventView } from './components/EventView';
@@ -21,23 +21,15 @@ export const CalendarPage = () => {
   );
 
   const { notifications, notifiedEvents, setNotifications } = useNotifications(events);
-  const { view, setView, currentDate, holidays, navigate } = useCalendarView();
+  const { view, currentDate } = useCalendarView();
   const { searchTerm, filteredEvents, setSearchTerm } = useSearch(events, currentDate, view);
 
   return (
     <Box w="full" h="100vh" m="auto" p={5}>
       <Flex gap={6} h="full">
-        <EventFormComponent events={events} saveEvent={saveEvent} />
+        <AddEventForm events={events} saveEvent={saveEvent} />
 
-        <EventView
-          view={view}
-          setView={setView}
-          currentDate={currentDate}
-          holidays={holidays}
-          filteredEvents={filteredEvents}
-          notifiedEvents={notifiedEvents}
-          navigate={navigate}
-        />
+        <EventView filteredEvents={filteredEvents} notifiedEvents={notifiedEvents} />
 
         <EventSearch
           searchTerm={searchTerm}
@@ -50,9 +42,7 @@ export const CalendarPage = () => {
 
       <EventOverlapDialog saveEvent={saveEvent} />
 
-      {notifications.length > 0 && (
-        <NotificationAlert notifications={notifications} setNotifications={setNotifications} />
-      )}
+      <NotificationAlert notifications={notifications} setNotifications={setNotifications} />
     </Box>
   );
 };

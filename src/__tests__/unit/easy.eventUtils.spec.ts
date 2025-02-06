@@ -1,5 +1,4 @@
 import { FILTERED_EVENTS } from '../../__mocks__/response/mockEvents';
-import { Event } from '../../types';
 import { getFilteredEvents } from '../../utils/eventUtils';
 
 describe('getFilteredEvents', () => {

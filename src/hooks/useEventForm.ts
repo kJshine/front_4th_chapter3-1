@@ -1,13 +1,11 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent } from 'react';
 
-import { Event, RepeatType } from '../types';
+import { Event } from '../types';
 import { getTimeErrorMessage } from '../utils/timeValidation';
 
 import { useEventStore } from '@/pages/event/stores';
 
-type TimeErrorRecord = Record<'startTimeError' | 'endTimeError', string | null>;
-
-export const useEventForm = (initialEvent?: Event) => {
+export const useEventForm = () => {
   const store = useEventStore();
 
   const handleStartTimeChange = (e: ChangeEvent<HTMLInputElement>) => {

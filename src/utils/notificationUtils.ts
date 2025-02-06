@@ -15,7 +15,12 @@ export function createNotificationMessage({ notificationTime, title }: Event) {
   return `${notificationTime}분 후 ${title} 일정이 시작됩니다.`;
 }
 
-// 추가
+/**
+ * 알림 목록에서 특정 알림을 제거합니다.
+ * @param notifications 알림 목록
+ * @param indexToRemove 제거할 알림의 인덱스
+ * @returns 제거된 알림 목록
+ */
 export function removeNotificationByIndex(
   notifications: NotificationType[],
   indexToRemove: number

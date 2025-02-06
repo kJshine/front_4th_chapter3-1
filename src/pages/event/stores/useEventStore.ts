@@ -4,7 +4,7 @@ import { Event } from '@/types';
 
 type TimeErrorRecord = Record<'startTimeError' | 'endTimeError', string | null>;
 
-interface EventStore {
+export interface EventStore {
   title: Event['title'];
   date: Event['date'];
   startTime: Event['startTime'];
@@ -39,13 +39,13 @@ interface EventStore {
 }
 
 export const useEventStore = create<EventStore>((set) => ({
-  title: '',
-  date: '',
-  startTime: '',
-  endTime: '',
-  description: '',
-  location: '',
-  category: '',
+  title: '테스트 제목',
+  date: '2025-02-06',
+  startTime: '10:00',
+  endTime: '11:00',
+  description: '테스트 설명',
+  location: '테스트 위치',
+  category: '테스트 카테고리',
   repeatType: 'none',
   repeatInterval: 1,
   repeatEndDate: '',

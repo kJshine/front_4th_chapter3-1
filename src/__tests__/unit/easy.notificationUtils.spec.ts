@@ -1,6 +1,9 @@
 import { MOCK_EVENTS } from '../../__mocks__/response/mockEvents';
-import { Event } from '../../types';
-import { createNotificationMessage, getUpcomingEvents } from '../../utils/notificationUtils';
+import {
+  createNotificationMessage,
+  getUpcomingEvents,
+  removeNotificationByIndex,
+} from '../../utils/notificationUtils';
 
 describe('getUpcomingEvents', () => {
   it('알림 시간이 정확히 도래한 이벤트를 반환한다', () => {
@@ -37,5 +40,18 @@ describe('createNotificationMessage', () => {
     const msg = createNotificationMessage(MOCK_EVENTS[0]);
 
     expect(msg).toBe('10분 후 기존 회의 일정이 시작됩니다.');
+  });
+});
+
+describe('removeNotificationByIndex', () => {
+  it('올바른 알림 목록을 반환해야 한다', () => {
+    const notifications = [
+      { id: '1', message: '알림 1' },
+      { id: '2', message: '알림 2' },
+    ];
+
+    const result = removeNotificationByIndex(notifications, 0);
+
+    expect(result).toEqual([{ id: '2', message: '알림 2' }]);
   });
 });

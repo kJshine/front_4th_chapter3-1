@@ -10,12 +10,14 @@ import {
 
 import { RepeatSettings } from './features';
 import { useAddEventForm } from './hooks';
-import { CATEGORIES, NOTIFICATION_OPTIONS } from '../../constants';
+import { NOTIFICATION_OPTIONS } from '../../constants';
 import { useEventStore } from '../../stores';
 
 import { InputField, SelectField, TimeField } from '@/shared/ui';
 import { Event, EventForm } from '@/types';
 import { getTimeErrorMessage } from '@/utils/timeValidation';
+
+const CATEGORIES = ['업무', '개인', '가족', '기타'];
 
 interface AddEventFormProps {
   events: Event[];

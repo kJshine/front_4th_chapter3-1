@@ -9,6 +9,10 @@ interface NotificationAlertProps {
   setNotifications: Dispatch<SetStateAction<NotificationType[]>>;
 }
 export const NotificationAlert = ({ notifications, setNotifications }: NotificationAlertProps) => {
+  const removeNotification = (index: number) => {
+    setNotifications(removeNotificationByIndex(notifications, index));
+  };
+
   return (
     notifications.length > 0 && (
       <VStack position="fixed" top={4} right={4} spacing={2} align="flex-end">
@@ -18,9 +22,7 @@ export const NotificationAlert = ({ notifications, setNotifications }: Notificat
             <Box flex="1">
               <AlertTitle fontSize="sm">{notification.message}</AlertTitle>
             </Box>
-            <CloseButton
-              onClick={() => setNotifications(removeNotificationByIndex(notifications, index))}
-            />
+            <CloseButton onClick={() => removeNotification(index)} />
           </Alert>
         ))}
       </VStack>

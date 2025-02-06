@@ -57,9 +57,3 @@ export const setupMockHandlers = (initEvents: Event[] = []) => {
     getEvents: () => [...testEvents],
   };
 };
-
-export const setupMockHandlerCreation = (initEvents = [] as Event[]) => {};
-
-export const setupMockHandlerUpdating = () => {};
-
-export const setupMockHandlerDeletion = () => {};

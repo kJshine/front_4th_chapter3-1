@@ -1,8 +1,11 @@
 import { screen, waitFor, within } from '@testing-library/react';
 import { UserEvent } from '@testing-library/user-event';
+import { vi } from 'vitest';
 
 import { Event } from '../types';
 import { fillZero } from '../utils/dateUtils';
+
+import { EventStore } from '@/pages/event/stores';
 
 export const assertDate = (date1: Date, date2: Date) => {
   expect(date1.toISOString()).toBe(date2.toISOString());
@@ -105,3 +108,40 @@ export async function performSearch(user: UserEvent, searchTerm: string) {
   }
   return screen.getByTestId('event-list');
 }
+
+export const mockEventStoreFactory = (overrides: Partial<EventStore> = {}): EventStore => ({
+  title: '테스트 1',
+  date: '2025-02-06',
+  startTime: '10:00',
+  endTime: '11:00',
+  description: '테스트 설명',
+  location: '테스트 위치',
+  category: '테스트 카테고리',
+  repeatType: 'none',
+  repeatInterval: 0,
+  repeatEndDate: '',
+  notificationTime: 10,
+  isRepeating: false,
+  editingEvent: null,
+  startTimeError: null,
+  endTimeError: null,
+  timeError: {
+    startTimeError: null,
+    endTimeError: null,
+  },
+  setTitle: vi.fn(),
+  setDate: vi.fn(),
+  setStartTime: vi.fn(),
+  setEndTime: vi.fn(),
+  setDescription: vi.fn(),
+  setLocation: vi.fn(),
+  setCategory: vi.fn(),
+  setRepeatType: vi.fn(),
+  setRepeatInterval: vi.fn(),
+  setRepeatEndDate: vi.fn(),
+  setNotificationTime: vi.fn(),
+  setIsRepeating: vi.fn(),
+  setEditingEvent: vi.fn(),
+  setTimeError: vi.fn(),
+  ...overrides,
+});

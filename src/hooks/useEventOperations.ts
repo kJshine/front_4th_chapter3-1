@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { Event, EventForm } from '../types';
 
 import { eventApi } from '@/apis';
+import { TOAST_CONFIG, TOAST_STATUS } from '@/shared/model';
 
 const TOAST_MESSAGE = {
   SUCCESS: '일정이 저장되었습니다.',
@@ -15,24 +16,7 @@ const TOAST_MESSAGE = {
   DELETE_SUCCESS: '일정이 삭제되었습니다.',
   DELETE_ERROR: '일정 삭제 실패',
   LOADING_SUCCESS: '일정 로딩 완료!',
-  LOADING_ERROR: '일정 로딩 실패',
-} as const;
-
-const TOAST_STATUS = {
-  SUCCESS: 'success',
-  ERROR: 'error',
-  INFO: 'info',
-  WARNING: 'warning',
-} as const;
-
-const TOAST_CONFIG = {
-  DEFAULT: {
-    duration: 3000,
-    isClosable: true,
-  },
-  LOADING: {
-    duration: 1000,
-  },
+  LOADING_ERROR: '이벤트 로딩 실패',
 } as const;
 
 export const useEventOperations = (editing: boolean, onSave?: () => void) => {

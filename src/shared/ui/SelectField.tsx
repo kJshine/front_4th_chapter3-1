@@ -2,16 +2,17 @@ import { FormControl, FormLabel, Select } from '@chakra-ui/react';
 import { ChangeEvent } from 'react';
 
 interface SelectFieldProps {
-  label: string;
+  label?: string;
+  ariaLabel?: string;
   value: string | number;
   options: { value: string | number; label: string }[];
   onChange: (e: ChangeEvent<HTMLSelectElement>) => void;
 }
 
-export const SelectField = ({ label, value, options, onChange }: SelectFieldProps) => (
+export const SelectField = ({ label, ariaLabel, value, options, onChange }: SelectFieldProps) => (
   <FormControl>
     <FormLabel>{label}</FormLabel>
-    <Select value={value} onChange={onChange}>
+    <Select value={value} onChange={onChange} aria-label={ariaLabel}>
       {options.map((option) => (
         <option key={option.value} value={option.value}>
           {option.label}

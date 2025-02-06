@@ -1,4 +1,4 @@
-import { CalendarPage } from '@/pages/calendar';
+import { CalendarPage } from '@/pages/event';
 
 function App() {
   return <CalendarPage />;

@@ -13,7 +13,7 @@ import {
   Text,
 } from '@chakra-ui/react';
 
-import { WEEK_DAYS } from '@/pages/calendar/constants';
+import { WEEK_DAYS } from '@/pages/event/constants';
 import { Event } from '@/types';
 import { getWeekDates, formatWeek } from '@/utils/dateUtils';
 

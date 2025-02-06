@@ -1,7 +1,7 @@
 import { useToast } from '@chakra-ui/react';
 
 import { useEventForm } from '@/hooks/useEventForm';
-import { useEventStore, useOverlapDialogStore } from '@/pages/calendar/stores';
+import { useEventStore, useOverlapDialogStore } from '@/pages/event/stores';
 import { EventForm, Event } from '@/types';
 import { findOverlappingEvents } from '@/utils/eventOverlap';
 

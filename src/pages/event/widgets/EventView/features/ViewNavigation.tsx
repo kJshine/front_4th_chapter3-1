@@ -19,7 +19,7 @@ export const ViewNavigation = ({ view, setView, navigate }: ViewNavigationProps)
       />
 
       <SelectField
-        label="View"
+        ariaLabel="view"
         value={view}
         onChange={(e) => setView(e.target.value as 'week' | 'month')}
         options={[

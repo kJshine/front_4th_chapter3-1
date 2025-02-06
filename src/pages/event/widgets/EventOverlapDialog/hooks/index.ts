@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 
-import { useEventStore, useOverlapDialogStore } from '@/pages/calendar/stores';
+import { useEventStore, useOverlapDialogStore } from '@/pages/event/stores';
 import { Event, EventForm } from '@/types';
 
 export const useEventOverlapDialog = () => {

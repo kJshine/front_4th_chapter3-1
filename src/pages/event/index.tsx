@@ -1,10 +1,10 @@
 import { Box, Flex } from '@chakra-ui/react';
 
-import { AddEventForm } from './components/AddEventForm';
-import { EventOverlapDialog } from './components/EventOverlapDialog';
-import { EventSearch } from './components/EventSearch';
-import { EventView } from './components/EventView';
-import { NotificationAlert } from './components/NotificationAlert';
+import { AddEventForm } from './widgets/AddEventForm';
+import { EventOverlapDialog } from './widgets/EventOverlapDialog';
+import { EventSearch } from './widgets/EventSearch';
+import { EventView } from './widgets/EventView';
+import { NotificationAlert } from './widgets/NotificationAlert';
 import { useEventStore } from './stores';
 
 import { useCalendarView } from '@/hooks/useCalendarView';

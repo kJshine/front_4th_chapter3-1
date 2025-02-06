@@ -3,7 +3,7 @@ import { ChangeEvent, useState } from 'react';
 import { Event, RepeatType } from '../types';
 import { getTimeErrorMessage } from '../utils/timeValidation';
 
-import { useEventStore } from '@/pages/calendar/stores';
+import { useEventStore } from '@/pages/event/stores';
 
 type TimeErrorRecord = Record<'startTimeError' | 'endTimeError', string | null>;
 

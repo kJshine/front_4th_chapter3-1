@@ -8,9 +8,8 @@ import {
   Button,
   Text,
 } from '@chakra-ui/react';
-import { useRef } from 'react';
 
-import { useEventStore } from '../../stores';
+import { useEventOverlapDialog } from './hooks';
 import { useOverlapDialogStore } from '../../stores/useOverlapDialogStore';
 
 import { Event, EventForm } from '@/types';
@@ -19,9 +18,7 @@ interface EventOverlapDialogProps {
 }
 
 export const EventOverlapDialog = ({ saveEvent }: EventOverlapDialogProps) => {
-  const eventStore = useEventStore();
-  const cancelRef = useRef<HTMLButtonElement>(null);
-
+  const { cancelRef, handleClose, handleConfirm } = useEventOverlapDialog();
   const { isOverlapDialogOpen, setIsOverlapDialogOpen, overlappingEvents } =
     useOverlapDialogStore();
 
@@ -48,32 +45,10 @@ export const EventOverlapDialog = ({ saveEvent }: EventOverlapDialogProps) => {
           </AlertDialogBody>
 
           <AlertDialogFooter>
-            <Button ref={cancelRef} onClick={() => setIsOverlapDialogOpen(false)}>
+            <Button ref={cancelRef} onClick={handleClose}>
               취소
             </Button>
-            <Button
-              colorScheme="red"
-              onClick={() => {
-                setIsOverlapDialogOpen(false);
-                saveEvent({
-                  id: eventStore.editingEvent ? eventStore.editingEvent.id : undefined,
-                  title: eventStore.title,
-                  date: eventStore.date,
-                  startTime: eventStore.startTime,
-                  endTime: eventStore.endTime,
-                  description: eventStore.description,
-                  location: eventStore.location,
-                  category: eventStore.category,
-                  repeat: {
-                    type: eventStore.isRepeating ? eventStore.repeatType : 'none',
-                    interval: eventStore.repeatInterval,
-                    endDate: eventStore.repeatEndDate || undefined,
-                  },
-                  notificationTime: eventStore.notificationTime,
-                });
-              }}
-              ml={3}
-            >
+            <Button colorScheme="red" onClick={() => handleConfirm(saveEvent)} ml={3}>
               계속 진행
             </Button>
           </AlertDialogFooter>

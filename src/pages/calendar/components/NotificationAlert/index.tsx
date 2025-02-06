@@ -2,6 +2,7 @@ import { Alert, AlertIcon, AlertTitle, Box, CloseButton, VStack } from '@chakra-
 import { Dispatch, SetStateAction } from 'react';
 
 import { NotificationType } from '@/types';
+import { removeNotificationByIndex } from '@/utils';
 
 interface NotificationAlertProps {
   notifications: NotificationType[];
@@ -18,7 +19,7 @@ export const NotificationAlert = ({ notifications, setNotifications }: Notificat
               <AlertTitle fontSize="sm">{notification.message}</AlertTitle>
             </Box>
             <CloseButton
-              onClick={() => setNotifications((prev) => prev.filter((_, i) => i !== index))}
+              onClick={() => setNotifications(removeNotificationByIndex(notifications, index))}
             />
           </Alert>
         ))}

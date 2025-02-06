@@ -1,4 +1,4 @@
-import { Event } from '../types';
+import { Event, NotificationType } from '../types';
 
 const 초 = 1000;
 const 분 = 초 * 60;
@@ -13,4 +13,12 @@ export function getUpcomingEvents(events: Event[], now: Date, notifiedEvents: st
 
 export function createNotificationMessage({ notificationTime, title }: Event) {
   return `${notificationTime}분 후 ${title} 일정이 시작됩니다.`;
+}
+
+// 추가
+export function removeNotificationByIndex(
+  notifications: NotificationType[],
+  indexToRemove: number
+): NotificationType[] {
+  return notifications.filter((_, index) => index !== indexToRemove);
 }
